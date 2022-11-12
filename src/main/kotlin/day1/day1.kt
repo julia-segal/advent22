@@ -11,7 +11,7 @@ class Day1 {
 
 fun main() {
     val input = Input(Day.DAY1).getLines()
-    println("utils.Input: $input")
+    println("Input: $input")
 
     val results = Day1().calculate(input)
     println("Results: $results")

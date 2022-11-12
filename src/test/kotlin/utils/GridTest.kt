@@ -4,9 +4,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 
-
 internal class GridTest {
-
     @Test
     fun `add one row`() {
         val sut: Grid<String> = Grid()
@@ -14,7 +12,6 @@ internal class GridTest {
         val expected = listOf("a", "b", "c", "d", "e", "f").toItems()
 
         sut.addRow(row)
-        print(sut.toString())
 
         assertEquals(expected, sut.toRows().first())
     }
@@ -31,7 +28,6 @@ internal class GridTest {
 
         sut.addRow(row1)
         sut.addRow(row2)
-        print(sut.toString())
 
         assertEquals(expected, sut.toRows())
     }
@@ -40,9 +36,9 @@ internal class GridTest {
     fun `add row of numbers`() {
         val expected =
             listOf(
-                listOf(1,2,3,4,5).toItems(),
-                listOf(2,3,4,5,6).toItems(),
-                listOf(7,8,9,10,11).toItems()
+                listOf(1, 2, 3, 4, 5).toItems(),
+                listOf(2, 3, 4, 5, 6).toItems(),
+                listOf(7, 8, 9, 10, 11).toItems()
             )
 
         val sut = makeIntGrid()
@@ -51,10 +47,22 @@ internal class GridTest {
     }
 
     @Test
+    fun `get dimens`() {
+        val expectedXDimen = 5
+        val expectedYDimen = 3
+        val sut = makeIntGrid()
+
+        val actual = sut.dimens
+
+        assertEquals(expectedXDimen, actual.first)
+        assertEquals(expectedYDimen, actual.second)
+    }
+
+    @Test
     fun `get above`() {
         val sut = makeIntGrid()
 
-        val result = sut.above(Point(2,1))!!.value
+        val result = sut.itemAt(Point(2, 1).above())!!.value
 
         assertEquals(3, result)
     }
@@ -63,7 +71,7 @@ internal class GridTest {
     fun `get above left`() {
         val sut = makeIntGrid()
 
-        val result = sut.aboveLeft(Point(2,2))!!.value
+        val result = sut.itemAt(Point(2, 2).above().left())!!.value
 
         assertEquals(3, result)
     }
@@ -72,7 +80,7 @@ internal class GridTest {
     fun `get above right`() {
         val sut = makeIntGrid()
 
-        val result = sut.aboveRight(Point(2,2))!!.value
+        val result = sut.itemAt(Point(2, 2).above().right())!!.value
 
         assertEquals(5, result)
     }
@@ -81,7 +89,7 @@ internal class GridTest {
     fun `get below left`() {
         val sut = makeIntGrid()
 
-        val result = sut.belowLeft(Point(1,1))!!.value
+        val result = sut.itemAt(Point(1, 1).below().left())!!.value
 
         assertEquals(7, result)
     }
@@ -90,7 +98,7 @@ internal class GridTest {
     fun `get below right`() {
         val sut = makeIntGrid()
 
-        val result = sut.belowRight(Point(1,1))!!.value
+        val result = sut.itemAt(Point(1, 1).below().right())!!.value
 
         assertEquals(9, result)
     }
@@ -100,16 +108,16 @@ internal class GridTest {
     fun `get above is null`() {
         val sut = makeIntGrid()
 
-        val result = sut.above(Point(2,0))
+        val result = sut.itemAt(Point(2, 0).above())
 
-        assertNull( result)
+        assertNull(result)
     }
 
     @Test
     fun `get below`() {
         val sut = makeIntGrid()
 
-        val result = sut.below(Point(2,1))!!.value
+        val result = sut.itemAt(Point(2, 1).below())!!.value
 
         assertEquals(9, result)
     }
@@ -118,7 +126,7 @@ internal class GridTest {
     fun `get below is null`() {
         val sut = makeIntGrid()
 
-        val result = sut.below(Point(2,2))
+        val result = sut.itemAt(Point(2, 2).below())
 
         assertNull(result)
     }
@@ -127,7 +135,7 @@ internal class GridTest {
     fun `get left`() {
         val sut = makeIntGrid()
 
-        val result = sut.left(Point(2,1))!!.value
+        val result = sut.itemAt(Point(2, 1).left())!!.value
 
         assertEquals(3, result)
     }
@@ -136,7 +144,7 @@ internal class GridTest {
     fun `get left is null`() {
         val sut = makeIntGrid()
 
-        val result = sut.left(Point(0,2))
+        val result = sut.itemAt(Point(0, 2).left())
 
         assertNull(result)
     }
@@ -145,7 +153,7 @@ internal class GridTest {
     fun `get right`() {
         val sut = makeIntGrid()
 
-        val result = sut.right(Point(2,1))!!.value
+        val result = sut.itemAt(Point(2, 1).right())!!.value
 
         assertEquals(5, result)
     }
@@ -154,7 +162,7 @@ internal class GridTest {
     fun `get right is null`() {
         val sut = makeIntGrid()
 
-        val result = sut.right(Point(0,5))
+        val result = sut.itemAt(Point(0, 5).right())
 
         assertNull(result)
     }
@@ -163,7 +171,7 @@ internal class GridTest {
     fun `get item at`() {
         val sut = makeIntGrid()
 
-        val result = sut.item(Point(3,2))!!.value
+        val result = sut.itemAt(Point(3, 2))!!.value
 
         assertEquals(10, result)
     }
@@ -174,9 +182,9 @@ internal class GridTest {
         val oldValue = 10
         val newValue = -2
 
-        val original = sut.item(Point(3,2))!!.value
-        sut.changeItem(Point(3,2), Item(newValue))
-        val changed = sut.item(Point(3,2))!!.value
+        val original = sut.itemAt(Point(3, 2))!!.value
+        sut.putItemAt(Point(3, 2), Item(newValue))
+        val changed = sut.itemAt(Point(3, 2))!!.value
 
         assertEquals(oldValue, original)
         assertEquals(newValue, changed)
@@ -185,57 +193,46 @@ internal class GridTest {
     @Test
     fun `find first`() {
         val sut = makeIntGrid()
-        val expectedPoint = Point(4,0)
+        val expectedPoint = Point(4, 0)
         val expectedValue = 5
 
-        val results = sut.find(Item(5))
+        val results = sut.findItem(Item(5))
 
         assertEquals(expectedPoint, results.keys.first())
         assertEquals(expectedValue, results.values.first().value)
     }
 
     @Test
-    fun `sum of each line`() {
+    fun `for each multiply by 3, add 2`() {
         val sut = makeIntGrid()
-        val expected = listOf(15, 20, 45)
+        val expected =
+            listOf(
+                listOf(5, 8, 11, 14, 17).toItems(),
+                listOf(8, 11, 14, 17, 20).toItems(),
+                listOf(23, 26, 29, 32, 35).toItems()
+            )
 
-        val sums = mutableListOf<Int>()
-        val rows = sut.toRows()
-        rows.map { row ->
-            sums.add(row.reduce{ acc, item -> Item(acc.value + item.value) }.value)
-        }
 
-        assertEquals(expected, sums)
+        sut.forEach { (it * 3) + 2 }
+
+        assertEquals(expected, sut.toRows())
     }
 
     @Test
-    fun `sum total`() {
+    fun `make all items 0`() {
         val sut = makeIntGrid()
-        val expected = 80
+        val expected =
+            listOf(
+                listOf(0, 0, 0, 0, 0).toItems(),
+                listOf(0, 0, 0, 0, 0).toItems(),
+                listOf(0, 0, 0, 0, 0).toItems()
+            )
 
-        var sum = 0
-        val rows = sut.toRows()
-        rows.map { row->
-            sum += row.reduce { acc, next -> Item(acc.value + next.value) }.value
-        }
 
-        assertEquals(expected, sum)
+        sut.forEach { 0 }
+
+        assertEquals(expected, sut.toRows())
     }
-
-    @Test
-    fun `sum of each column`() {
-        val sut = makeIntGrid()
-        val expected = listOf(10, 13, 16, 19, 22)
-
-        val sums = mutableListOf<Int>()
-        val columns = sut.toColumns()
-        columns.map { column->
-            sums.add(column.reduce { acc, next -> Item(acc.value + next.value) }.value)
-        }
-
-        assertEquals(expected, sums)
-    }
-
 
     /*
         Grid:
@@ -245,14 +242,12 @@ internal class GridTest {
      */
     private fun makeIntGrid(): Grid<Int> {
         val grid = Grid<Int>()
-        val row1 = listOf(1,2,3,4,5).toItems()
-        val row2 = listOf(2,3,4,5,6).toItems()
-        val row3 = listOf(7,8,9,10,11).toItems()
+        val row1 = listOf(1, 2, 3, 4, 5).toItems()
+        val row2 = listOf(2, 3, 4, 5, 6).toItems()
+        val row3 = listOf(7, 8, 9, 10, 11).toItems()
         grid.addRow(row1)
         grid.addRow(row2)
         grid.addRow(row3)
         return grid
     }
 }
-
-

@@ -16,5 +16,4 @@ internal class Day1Test {
 
         assertEquals(expected, actual)
     }
-
 }
