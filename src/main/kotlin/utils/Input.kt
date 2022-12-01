@@ -41,13 +41,4 @@ class Input(private val day: Day) {
 
     private val Day.fileName
         get() = name.lowercase(Locale.getDefault())
-
-    companion object {
-
-        fun List<String>.items(separator: Char = ' '): List<String> {
-            val items = mutableListOf<String>()
-            map { line -> line.split(separator).map { item -> items.add(item) } }
-            return items.filterNot { it == "" }
-        }
-    }
 }
