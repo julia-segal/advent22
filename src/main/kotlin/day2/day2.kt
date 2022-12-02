@@ -62,27 +62,20 @@ class Day2 {
             else -> LOSE
         }
 
-    fun part2(lines: List<String>): Int {
+    private fun battle(lines: List<String>, weapons: (Char, Char) -> Pair<Int, Int>): Int {
         var score = 0
-
         lines.map {
-            val elf = it.first().toWeapon
-            val me = it.last().toOutcome.getOutcomeWeapon(elf)
+            val (elf, me) = weapons(it.first(), it.last())
             score += me + fight(me, elf)
         }
         return score
     }
 
-    fun part1(lines: List<String>): Int {
-        var score = 0
+    fun part2(lines: List<String>) =
+        battle(lines) { elf, me -> Pair(elf.toWeapon, me.toOutcome.getOutcomeWeapon(elf.toWeapon)) }
 
-        lines.map {
-            val elf = it.first().toWeapon
-            val me = it.last().toWeapon
-            score += me + fight(me, elf)
-        }
-        return score
-    }
+    fun part1(lines: List<String>): Int =
+        battle(lines) { elf, me -> Pair(elf.toWeapon, me.toWeapon) }
 }
 
 fun main() {
