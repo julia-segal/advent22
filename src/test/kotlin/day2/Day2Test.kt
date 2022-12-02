@@ -9,13 +9,15 @@ internal class Day2Test {
 
     private val input: List<String>
         get() {
-            val input = ""
+            val input = "A Y\n" +
+                    "B X\n" +
+                    "C Z"
             return input.split('\n')
         }
 
     @Test
     fun part1() {
-        val expected = 0
+        val expected = 15
 
         val actual = sut.part1(input)
 
@@ -23,9 +25,9 @@ internal class Day2Test {
     }
 
     @Test
-    fun part2() {        val expected = 0
+    fun part2() {        val expected = 12
 
-        val actual = sut.part1(input)
+        val actual = sut.part2(input)
 
         assertEquals(expected, actual)
     }
