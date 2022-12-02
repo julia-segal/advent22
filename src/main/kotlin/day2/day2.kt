@@ -62,35 +62,26 @@ class Day2 {
             else -> LOSE
         }
 
-    private fun battle(me: List<Int>, elves: List<Int>): Int {
-        var total = 0
-        me.mapIndexed { index, myWeapon ->
-            total += myWeapon + fight(myWeapon, elves[index])
-        }
-        return total
-    }
-
     fun part2(lines: List<String>): Int {
-        val me = mutableListOf<Int>()
-        val elves = mutableListOf<Int>()
+        var score = 0
 
         lines.map {
-            val elfWeapon = it.first().toWeapon
-            elves.add(elfWeapon)
-            me.add(it.last().toOutcome.getOutcomeWeapon(elfWeapon))
+            val elf = it.first().toWeapon
+            val me = it.last().toOutcome.getOutcomeWeapon(elf)
+            score += me + fight(me, elf)
         }
-        return battle(me, elves)
+        return score
     }
 
     fun part1(lines: List<String>): Int {
-        val me = mutableListOf<Int>()
-        val elves = mutableListOf<Int>()
+        var score = 0
 
         lines.map {
-            elves.add(it.first().toWeapon)
-            me.add(it.last().toWeapon)
+            val elf = it.first().toWeapon
+            val me = it.last().toWeapon
+            score += me + fight(me, elf)
         }
-        return battle(me, elves)
+        return score
     }
 }
 
