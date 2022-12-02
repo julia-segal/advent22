@@ -1,11 +1,11 @@
-package dayN
+package day3
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-internal class DayNTest {
+internal class Day3Test {
 
-    private val sut = DayN()
+    private val sut = Day3()
 
     private val input: List<String>
         get() {
@@ -23,8 +23,7 @@ internal class DayNTest {
     }
 
     @Test
-    fun part2() {
-        val expected = 0
+    fun part2() {        val expected = 0
 
         val actual = sut.part2(input)
 
