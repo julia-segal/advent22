@@ -23,7 +23,8 @@ internal class Day3Test {
     }
 
     @Test
-    fun part2() {        val expected = 0
+    fun part2() {
+        val expected = 0
 
         val actual = sut.part2(input)
 
