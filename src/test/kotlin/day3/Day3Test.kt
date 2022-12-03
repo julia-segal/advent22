@@ -9,13 +9,19 @@ internal class Day3Test {
 
     private val input: List<String>
         get() {
-            val input = ""
+            val input = "vJrwpWtwJgWrhcsFMMfFFhFp\n" +
+                    "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL\n" +
+                    "PmmdzqPrVvPwwTWBwg\n" +
+                    "wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn\n" +
+                    "ttgJtRGJQctTZtZT\n" +
+                    "CrZsJsPPZsGzwwsLwLmpwMDw"
+
             return input.split('\n')
         }
 
     @Test
     fun part1() {
-        val expected = 0
+        val expected = 157
 
         val actual = sut.part1(input)
 
@@ -24,10 +30,11 @@ internal class Day3Test {
 
     @Test
     fun part2() {
-        val expected = 0
+        val expected = 70
 
         val actual = sut.part2(input)
 
         assertEquals(expected, actual)
     }
+
 }
