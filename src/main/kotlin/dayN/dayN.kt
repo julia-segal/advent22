@@ -13,7 +13,7 @@ class DayN {
 }
 
 fun main() {
-    val input = Input(Day.DAYN).getLines()
+    val input = Input(Day.DAY1).getLines()
 
     println("Part 1: ${DayN().part1(input)}")
     println("Part 2: ${DayN().part2(input)}")
