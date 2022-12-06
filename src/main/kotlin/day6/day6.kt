@@ -5,11 +5,21 @@ import utils.Input.Day
 
 class Day6 {
 
-    fun part2(lines: List<String>) {
+    private fun findSignalIndex(line: String, step: Int): Int? {
+        var start = 0
+        while(start < line.length + step) {
+            if (line.subSequence(start, start + step).toSet().distinct().size == step) {
+                return start + step
+            } else {
+                start++
+            }
+        }
+        return null
     }
 
-    fun part1(lines: List<String>) {
-    }
+    fun part1(lines: List<String>): List<Int?> = lines.map { findSignalIndex(it, 4) }.toList()
+
+    fun part2(lines: List<String>): List<Int?> = lines.map { findSignalIndex(it, 14) }.toList()
 }
 
 fun main() {
